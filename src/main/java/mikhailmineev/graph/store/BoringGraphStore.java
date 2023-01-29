@@ -3,6 +3,7 @@ package mikhailmineev.graph.store;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Branch;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,10 @@ public class BoringGraphStore implements GraphStore {
         Branch ca = new Branch(c, a, 3);
         Branch bc = new Branch(b, c, 3);
         Branch cb = new Branch(c, b, 3);
+
+        a.setBranches(Arrays.asList(ab, ac));
+        b.setBranches(Arrays.asList(ba, bc));
+        c.setBranches(Arrays.asList(ca, cb));
 
         return new HashMap<>() {{
             put(a.getName(), a);
