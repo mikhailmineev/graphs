@@ -7,7 +7,7 @@ public interface StatisticsWriter {
     /**
      * Register a node is visited.
      *
-     * @param node - visited node
+     * @param node visited node
      */
     void visited(Node node);
 }

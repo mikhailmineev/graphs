@@ -32,6 +32,8 @@ public interface Route {
     /**
      * Adds node to the tail of the solution and returns same or new tail.
      *
+     * @param node visited node
+     * @param branchToNode branch that leads to "node" in the first argument
      * @return route with added tail
      */
     Route addNode(Node node, Branch branchToNode);
@@ -39,6 +41,7 @@ public interface Route {
     /**
      * Creates new immutable route using default implementation.
      *
+     * @param firstNode node, the route begins with
      * @return new route
      */
     static Route newRoute(Node firstNode) {
