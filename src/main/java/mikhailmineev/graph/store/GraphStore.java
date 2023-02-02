@@ -11,5 +11,5 @@ public interface GraphStore {
      *
      * @return All nodes in graph with references to them
      */
-    Map<String, Node> returnGraph();
+    Map<String, Node> buildGraph();
 }

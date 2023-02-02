@@ -14,7 +14,7 @@ public class StoreTest {
 
     @Test
     public void testThreeNodeGraph() {
-        var graph = new ThreeNodeGraph().returnGraph();
+        var graph = new RelationalGraph(SampleGraphs.threeNodeGraph()).buildGraph();
 
         assertEquals(3, graph.size());
         assertBranch("a", List.of("b", "c"), graph);
@@ -24,7 +24,7 @@ public class StoreTest {
 
     @Test
     public void testFourNodeDiamondGraph() {
-        var graph = new FourNodeDiamondGraph().returnGraph();
+        var graph = new RelationalGraph(SampleGraphs.fourNodeDiamondGraph()).buildGraph();
 
         assertEquals(4, graph.size());
         assertBranch("a", List.of("b", "c"), graph);
@@ -35,7 +35,7 @@ public class StoreTest {
 
     @Test
     public void testFiveNodeWeightedGraph() {
-        var graph = new FiveNodeWeightedGraph().returnGraph();
+        var graph = new RelationalGraph(SampleGraphs.fiveNodeWeightedGraph()).buildGraph();
 
         assertEquals(5, graph.size());
         assertBranch("a", List.of("b", "c", "d"), List.of(2, 1, 2), graph);
@@ -47,7 +47,7 @@ public class StoreTest {
 
     @Test
     public void testTwoNodeTree() {
-        var graph = new TwoNodeTree().returnGraph();
+        var graph = new RelationalGraph(SampleTrees.twoNodeTree()).buildGraph();
 
         assertEquals(2, graph.size());
         assertBranch("a", List.of("b"), graph);
@@ -56,7 +56,7 @@ public class StoreTest {
 
     @Test
     public void testThreeNodeTree() {
-        var graph = new ThreeNodeTree().returnGraph();
+        var graph = new RelationalGraph(SampleTrees.threeNodeTree()).buildGraph();
 
         assertEquals(3, graph.size());
         assertBranch("a", List.of("b", "c"), graph);
@@ -66,7 +66,7 @@ public class StoreTest {
 
     @Test
     public void testFiveNodeTree() {
-        var graph = new FiveNodeTree().returnGraph();
+        var graph = new RelationalGraph(SampleTrees.fiveNodeTree()).buildGraph();
 
         assertEquals(5, graph.size());
         assertBranch("a", List.of("b", "c", "d"), graph);

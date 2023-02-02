@@ -25,7 +25,7 @@ public abstract class AbstractRouteTest {
 
     @BeforeEach
     public void setup() {
-        graph = new TwoNodeTree().returnGraph();
+        graph = new RelationalGraph(SampleTrees.twoNodeTree()).buildGraph();
         route = routeSupplier.apply(graph.get("a"));
     }
 

@@ -30,8 +30,7 @@ public abstract class AbstractStrategyTest {
 
     @Test
     public void test2NodePath() {
-        var store = new ThreeNodeGraph();
-        var graph = store.returnGraph();
+        var graph = new RelationalGraph(SampleGraphs.threeNodeGraph()).buildGraph();
 
         var route = strategy.findRoute("a", "c", graph, statistics);
 
@@ -42,8 +41,7 @@ public abstract class AbstractStrategyTest {
 
     @Test
     public void test4NodePath() {
-        var store = new FourNodeDiamondGraph();
-        var graph = store.returnGraph();
+        var graph = new RelationalGraph(SampleGraphs.fourNodeDiamondGraph()).buildGraph();
 
         var route = strategy.findRoute("a", "d", graph, statistics);
 
@@ -54,8 +52,7 @@ public abstract class AbstractStrategyTest {
 
     @Test
     public void test3NodeTree() {
-        var store = new ThreeNodeTree();
-        var graph = store.returnGraph();
+        var graph = new RelationalGraph(SampleTrees.threeNodeTree()).buildGraph();
 
         var route = strategy.findRoute("a", "c", graph, statistics);
 
@@ -66,8 +63,7 @@ public abstract class AbstractStrategyTest {
 
     @Test
     public void test5NodeTree() {
-        var store = new FiveNodeTree();
-        var graph = store.returnGraph();
+        var graph = new RelationalGraph(SampleTrees.fiveNodeTree()).buildGraph();
 
         var route = strategy.findRoute("a", "e", graph, statistics);
 
@@ -78,8 +74,7 @@ public abstract class AbstractStrategyTest {
 
     @Test
     public void test5NodeWeightedTree() {
-        var store = new FiveNodeWeightedGraph();
-        var graph = store.returnGraph();
+        var graph = new RelationalGraph(SampleGraphs.fiveNodeWeightedGraph()).buildGraph();
 
         var route = strategy.findRoute("a", "e", graph, statistics);
 
