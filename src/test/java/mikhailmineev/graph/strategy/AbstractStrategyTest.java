@@ -29,26 +29,26 @@ public abstract class AbstractStrategyTest {
     }
 
     @Test
-    public void test2NodePath() {
+    public void test3NodeGraph() {
         var graph = new RelationalGraph(SampleGraphs.threeNodeGraph()).buildGraph();
 
         var route = strategy.findRoute("a", "c", graph, statistics);
 
-        verifyTest2NodePath(route, statistics);
+        verify3NodeGraph(route, statistics);
     }
 
-    protected abstract void verifyTest2NodePath(Route route, StatisticsReader statistics);
+    protected abstract void verify3NodeGraph(Route route, StatisticsReader statistics);
 
     @Test
-    public void test4NodePath() {
+    public void test4NodeDiamondGraph() {
         var graph = new RelationalGraph(SampleGraphs.fourNodeDiamondGraph()).buildGraph();
 
         var route = strategy.findRoute("a", "d", graph, statistics);
 
-        verifyTest4NodePath(route, statistics);
+        verify4NodeDiamondGraph(route, statistics);
     }
 
-    protected abstract void verifyTest4NodePath(Route route, StatisticsReader statistics);
+    protected abstract void verify4NodeDiamondGraph(Route route, StatisticsReader statistics);
 
     @Test
     public void test3NodeTree() {
@@ -56,10 +56,10 @@ public abstract class AbstractStrategyTest {
 
         var route = strategy.findRoute("a", "c", graph, statistics);
 
-        verifyTest3NodeTree(route, statistics);
+        verify3NodeTree(route, statistics);
     }
 
-    protected abstract void verifyTest3NodeTree(Route route, StatisticsReader statistics);
+    protected abstract void verify3NodeTree(Route route, StatisticsReader statistics);
 
     @Test
     public void test5NodeTree() {
@@ -67,20 +67,20 @@ public abstract class AbstractStrategyTest {
 
         var route = strategy.findRoute("a", "e", graph, statistics);
 
-        verifyTest5NodeTree(route, statistics);
+        verify5NodeTree(route, statistics);
     }
 
-    protected abstract void verifyTest5NodeTree(Route route, StatisticsReader statistics);
+    protected abstract void verify5NodeTree(Route route, StatisticsReader statistics);
 
     @Test
-    public void test5NodeWeightedTree() {
+    public void test5NodeWeightedGraph() {
         var graph = new RelationalGraph(SampleGraphs.fiveNodeWeightedGraph()).buildGraph();
 
         var route = strategy.findRoute("a", "e", graph, statistics);
 
-        verifyTest5NodeWeightedTree(route, statistics);
+        verify5NodeWeightedGraph(route, statistics);
     }
 
-    protected abstract void verifyTest5NodeWeightedTree(Route route, StatisticsReader statistics);
+    protected abstract void verify5NodeWeightedGraph(Route route, StatisticsReader statistics);
 
 }
