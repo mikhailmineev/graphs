@@ -20,7 +20,7 @@ public class BreadthFirstStrategy implements Strategy {
                 .comparingInt((Pair<Node, Route> e) -> e.right().depth())
                 .thenComparing((Pair<Node, Route> e) -> e.left().getName());
         TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(depthFirst);
-        Route route = new Route(start);
+        Route route = Route.newRoute(start);
 
         toVisit.add(new Pair<>(start, route));
 

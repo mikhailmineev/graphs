@@ -5,10 +5,7 @@ import mikhailmineev.graph.stats.DefaultStatistics;
 
 import mikhailmineev.graph.stats.Statistics;
 import mikhailmineev.graph.stats.StatisticsReader;
-import mikhailmineev.graph.store.FiveNodeTree;
-import mikhailmineev.graph.store.FourNodeDiamondGraph;
-import mikhailmineev.graph.store.ThreeNodeGraph;
-import mikhailmineev.graph.store.ThreeNodeTree;
+import mikhailmineev.graph.store.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -78,5 +75,17 @@ public abstract class AbstractStrategyTest {
     }
 
     protected abstract void verifyTest5NodeTree(Route route, StatisticsReader statistics);
+
+    @Test
+    public void test5NodeWeightedTree() {
+        var store = new FourNodeWeightedTree();
+        var graph = store.returnGraph();
+
+        var route = strategy.findRoute("a", "e", graph, statistics);
+
+        verifyTest5NodeWeightedTree(route, statistics);
+    }
+
+    protected abstract void verifyTest5NodeWeightedTree(Route route, StatisticsReader statistics);
 
 }

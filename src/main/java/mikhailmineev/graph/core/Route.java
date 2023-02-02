@@ -5,33 +5,47 @@ import java.util.stream.Collectors;
 
 public class Route {
 
-    private final List<Node> path;
+    private final List<Pair<Node, Branch>> path;
 
-    public Route(List<Node> path) {
+    private Route(Node path) {
+        this(new Pair<>(path, null));
+    }
+
+    private Route(List<Pair<Node, Branch>> path) {
         this.path = Collections.unmodifiableList(path);
     }
 
-    public Route(Node node) {
+    private Route(Pair<Node, Branch> node) {
         this.path = Collections.singletonList(node);
     }
 
+    public static Route newRoute(Node firstNode) {
+        return new Route(firstNode);
+    }
+
     public List<String> getNodeNames() {
-        return path.stream().map(Node::getName).toList();
+        return path.stream().map(Pair::left).map(Node::getName).toList();
     }
 
     public int depth() {
         return path.size();
     }
 
-    public Route addNode(Node node) {
-        List<Node> copy = new ArrayList<>(path);
-        copy.add(node);
+    public int length() {
+        return path.stream().map(Pair::right).filter(Objects::nonNull).mapToInt(Branch::length).sum();
+    }
+
+    public Route addNode(Node node, Branch branchToNode) {
+        List<Pair<Node, Branch>> copy = new ArrayList<>(path);
+        copy.add(new Pair<>(node, branchToNode));
         return new Route(copy);
     }
 
     @Override
     public String toString() {
-        return "Path" + path.stream().map(e -> " " + e.getName()).collect(Collectors.joining());
+        return "Path" + path.stream()
+                .map(e -> " node " + e.left().getName() + " with branch to it " + e.right())
+                .collect(Collectors.joining());
     }
 
     @Override

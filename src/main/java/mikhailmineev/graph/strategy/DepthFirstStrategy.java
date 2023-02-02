@@ -3,16 +3,11 @@ package mikhailmineev.graph.strategy;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 import mikhailmineev.graph.core.Route;
-import mikhailmineev.graph.stats.NoStatistics;
 import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.*;
 
 public class DepthFirstStrategy implements Strategy {
-
-    public Route findRoute(String from, String to, Map<String, Node> graph) {
-        return findRoute(from, to, graph, new NoStatistics());
-    }
 
     @Override
     public Route findRoute(String from, String to, Map<String, Node> graph, StatisticsWriter statistics) {
@@ -22,7 +17,7 @@ public class DepthFirstStrategy implements Strategy {
         Set<Node> visited = new HashSet<>();
 
         LinkedList<Pair<Node, Route>> toVisit = new LinkedList<>();
-        Route route = new Route(start);
+        Route route = Route.newRoute(start);
 
         toVisit.add(new Pair<>(start, route));
 
