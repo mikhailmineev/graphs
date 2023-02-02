@@ -27,4 +27,9 @@ public class NoStatistics implements Statistics {
     public Collection<String> getNodesNamesVisited() {
         return Collections.emptyList();
     }
+
+    @Override
+    public StatisticsState getState() {
+        return StatisticsState.COMPLETE;
+    }
 }

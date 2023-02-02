@@ -21,4 +21,11 @@ public interface StatisticsReader {
      * @return names of visited nodes
      */
     Collection<String> getNodesNamesVisited();
+
+    /**
+     * Get current solving process status.
+     *
+     * @return status of solving process
+     */
+    StatisticsState getState();
 }
