@@ -17,7 +17,7 @@ import java.util.Map;
  *      e
  * </pre>
  */
-public class FourNodeWeightedTree implements GraphStore {
+public class FiveNodeWeightedGraph implements GraphStore {
 
     @Override
     public Map<String, Node> returnGraph() {

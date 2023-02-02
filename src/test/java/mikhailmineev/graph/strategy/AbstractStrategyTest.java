@@ -78,7 +78,7 @@ public abstract class AbstractStrategyTest {
 
     @Test
     public void test5NodeWeightedTree() {
-        var store = new FourNodeWeightedTree();
+        var store = new FiveNodeWeightedGraph();
         var graph = store.returnGraph();
 
         var route = strategy.findRoute("a", "e", graph, statistics);

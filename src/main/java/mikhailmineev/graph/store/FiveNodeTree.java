@@ -41,7 +41,7 @@ public class FiveNodeTree implements GraphStore {
         b.setBranches(List.of(ba));
         c.setBranches(Arrays.asList(ca, ce));
         d.setBranches(List.of(da));
-        e.setBranches(Arrays.asList(ca, ec));
+        e.setBranches(List.of(ec));
 
         return new HashMap<>() {{
             put(a.getName(), a);
