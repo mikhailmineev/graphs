@@ -3,7 +3,6 @@ package mikhailmineev.graph.stats;
 import mikhailmineev.graph.core.Node;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,6 @@ public class DefaultStatistics implements Statistics {
     public Collection<String> getNodesNamesVisited() {
         return getNodesVisited()
                 .stream()
-                .sorted(Comparator.comparing(Node::getName))
                 .map(Node::getName)
                 .collect(Collectors.toList());
     }

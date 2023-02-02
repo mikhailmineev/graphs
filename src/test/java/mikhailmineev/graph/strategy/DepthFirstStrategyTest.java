@@ -34,6 +34,6 @@ public class DepthFirstStrategyTest extends AbstractStrategyTest {
     @Override
     protected void verifyTest5NodeTree(Route route, StatisticsReader statistics) {
         assertEquals(List.of("a", "c", "e"), route.getNodeNames());
-        assertEquals(List.of("a", "c", "d"), statistics.getNodesNamesVisited());
+        assertEquals(List.of("a", "d", "c"), statistics.getNodesNamesVisited());
     }
 }
