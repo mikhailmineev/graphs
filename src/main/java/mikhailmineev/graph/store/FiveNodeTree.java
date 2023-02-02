@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 3 Node tree with structure
+ * 5 Node tree with structure
  * <pre>
  *    a
  *  / | \
