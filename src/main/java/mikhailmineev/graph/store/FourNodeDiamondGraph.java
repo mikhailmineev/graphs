@@ -7,7 +7,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoringGraphStore2 implements GraphStore {
+/**
+ * 4 Node graph with structure
+ * <pre>
+ *   a
+ *  / \
+ * b   c
+ *  \ /
+ *   d
+ * </pre>
+ */
+public class FourNodeDiamondGraph implements GraphStore {
 
     @Override
     public Map<String, Node> returnGraph() {

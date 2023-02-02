@@ -7,7 +7,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoringGraphStore implements GraphStore {
+/**
+ * 3 Node graph with structure
+ * <pre>
+ * a - b
+ *  \ /
+ *   c
+ * </pre>
+ */
+public class ThreeNodeGraph implements GraphStore {
 
     @Override
     public Map<String, Node> returnGraph() {

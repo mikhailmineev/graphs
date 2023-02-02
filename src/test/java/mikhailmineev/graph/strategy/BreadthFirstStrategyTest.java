@@ -1,40 +1,34 @@
 package mikhailmineev.graph.strategy;
 
-import mikhailmineev.graph.store.BoringGraphStore;
-import mikhailmineev.graph.store.BoringGraphStore2;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import mikhailmineev.graph.core.Route;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BreadthFirstStrategyTest {
+public class BreadthFirstStrategyTest extends AbstractStrategyTest {
 
-    private Strategy strategy;
-
-    @BeforeEach
-    public void setup() {
-        strategy = new BreadthFirstStrategy();
+    public BreadthFirstStrategyTest() {
+        super(BreadthFirstStrategy::new);
     }
 
-    @Test
-    public void test2NodePath() {
-        var store = new BoringGraphStore();
-        var graph = store.returnGraph();
-
-        var route = strategy.findRoute("a", "c", graph);
-
+    @Override
+    protected void verifyTest2NodePath(Route route) {
         assertEquals(Arrays.asList("a", "c"), route.getNodeNames());
     }
 
-    @Test
-    public void test4NodePath() {
-        var store = new BoringGraphStore2();
-        var graph = store.returnGraph();
-
-        var route = strategy.findRoute("a", "c", graph);
-
+    @Override
+    protected void verifyTest4NodePath(Route route) {
         assertEquals(Arrays.asList("a", "b", "c"), route.getNodeNames());
+    }
+
+    @Override
+    protected void verifyTest3NodeTree(Route route) {
+        assertEquals(Arrays.asList("a", "c"), route.getNodeNames());
+    }
+
+    @Override
+    protected void verifyTest5NodeTree(Route route) {
+        assertEquals(Arrays.asList("a", "c", "e"), route.getNodeNames());
     }
 }
