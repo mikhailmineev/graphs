@@ -11,7 +11,10 @@ public class BreadthFirstStrategy implements Strategy {
     @Override
     public Route findRoute(String from, String to, Map<String, Node> graph) {
         Set<Node> visited = new HashSet<>();
-        TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(Comparator.comparingInt(e -> e.right().depth()));
+        Comparator<Pair<Node, Route>> depthFirst = Comparator
+                .comparingInt((Pair<Node, Route> e) -> e.right().depth())
+                .thenComparing((Pair<Node, Route> e) -> e.left().getName());
+        TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(depthFirst);
         Node start = graph.get(from);
         Node end = graph.get(to);
         Route route = new Route(start);
