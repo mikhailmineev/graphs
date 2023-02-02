@@ -2,12 +2,19 @@ package mikhailmineev.graph.strategy;
 
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
-import mikhailmineev.graph.core.Route;
+import mikhailmineev.graph.solution.Route;
 import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class BreadthFirstStrategy implements Strategy {
+
+    private final Function<Node, Route> newRouteSupplier;
+
+    public BreadthFirstStrategy(Function<Node, Route> newRouteSupplier) {
+        this.newRouteSupplier = newRouteSupplier;
+    }
 
     @Override
     public Route findRoute(String from, String to, Map<String, Node> graph, StatisticsWriter statistics) {
@@ -20,7 +27,7 @@ public class BreadthFirstStrategy implements Strategy {
                 .comparingInt((Pair<Node, Route> e) -> e.right().depth())
                 .thenComparing((Pair<Node, Route> e) -> e.left().getName());
         TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(depthFirst);
-        Route route = Route.newRoute(start);
+        Route route = newRouteSupplier.apply(start);
 
         toVisit.add(new Pair<>(start, route));
 

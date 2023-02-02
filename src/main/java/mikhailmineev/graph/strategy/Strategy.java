@@ -1,7 +1,7 @@
 package mikhailmineev.graph.strategy;
 
 import mikhailmineev.graph.core.Node;
-import mikhailmineev.graph.core.Route;
+import mikhailmineev.graph.solution.Route;
 import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.Map;

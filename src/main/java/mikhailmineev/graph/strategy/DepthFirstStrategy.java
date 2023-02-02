@@ -2,12 +2,19 @@ package mikhailmineev.graph.strategy;
 
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
-import mikhailmineev.graph.core.Route;
+import mikhailmineev.graph.solution.Route;
 import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class DepthFirstStrategy implements Strategy {
+
+    private final Function<Node, Route> newRouteSupplier;
+
+    public DepthFirstStrategy(Function<Node, Route> newRouteSupplier) {
+        this.newRouteSupplier = newRouteSupplier;
+    }
 
     @Override
     public Route findRoute(String from, String to, Map<String, Node> graph, StatisticsWriter statistics) {
@@ -17,7 +24,7 @@ public class DepthFirstStrategy implements Strategy {
         Set<Node> visited = new HashSet<>();
 
         LinkedList<Pair<Node, Route>> toVisit = new LinkedList<>();
-        Route route = Route.newRoute(start);
+        Route route = newRouteSupplier.apply(start);
 
         toVisit.add(new Pair<>(start, route));
 

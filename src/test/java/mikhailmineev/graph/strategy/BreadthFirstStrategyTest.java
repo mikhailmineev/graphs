@@ -1,6 +1,6 @@
 package mikhailmineev.graph.strategy;
 
-import mikhailmineev.graph.core.Route;
+import mikhailmineev.graph.solution.Route;
 import mikhailmineev.graph.stats.StatisticsReader;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BreadthFirstStrategyTest extends AbstractStrategyTest {
 
     public BreadthFirstStrategyTest() {
-        super(BreadthFirstStrategy::new);
+        super(() -> new BreadthFirstStrategy(Route::newRoute));
     }
 
     @Override

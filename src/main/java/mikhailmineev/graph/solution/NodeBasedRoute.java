@@ -1,44 +1,48 @@
-package mikhailmineev.graph.core;
+package mikhailmineev.graph.solution;
+
+import mikhailmineev.graph.core.Branch;
+import mikhailmineev.graph.core.Node;
+import mikhailmineev.graph.core.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Route {
+public class NodeBasedRoute implements Route {
 
     private final List<Pair<Node, Branch>> path;
 
-    private Route(Node path) {
+    public NodeBasedRoute(Node path) {
         this(new Pair<>(path, null));
     }
 
-    private Route(List<Pair<Node, Branch>> path) {
+    private NodeBasedRoute(List<Pair<Node, Branch>> path) {
         this.path = Collections.unmodifiableList(path);
     }
 
-    private Route(Pair<Node, Branch> node) {
+    private NodeBasedRoute(Pair<Node, Branch> node) {
         this.path = Collections.singletonList(node);
     }
 
-    public static Route newRoute(Node firstNode) {
-        return new Route(firstNode);
-    }
-
+    @Override
     public List<String> getNodeNames() {
         return path.stream().map(Pair::left).map(Node::getName).toList();
     }
 
+    @Override
     public int depth() {
         return path.size();
     }
 
+    @Override
     public int length() {
         return path.stream().map(Pair::right).filter(Objects::nonNull).mapToInt(Branch::length).sum();
     }
 
+    @Override
     public Route addNode(Node node, Branch branchToNode) {
         List<Pair<Node, Branch>> copy = new ArrayList<>(path);
         copy.add(new Pair<>(node, branchToNode));
-        return new Route(copy);
+        return new NodeBasedRoute(copy);
     }
 
     @Override
@@ -52,7 +56,7 @@ public class Route {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Route route = (Route) o;
+        NodeBasedRoute route = (NodeBasedRoute) o;
         return path.equals(route.path);
     }
 

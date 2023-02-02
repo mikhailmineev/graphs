@@ -3,7 +3,7 @@ package mikhailmineev.graph.strategy;
 import mikhailmineev.graph.core.Branch;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
-import mikhailmineev.graph.core.Route;
+import mikhailmineev.graph.solution.Route;
 
 import java.util.Set;
 import java.util.function.Consumer;

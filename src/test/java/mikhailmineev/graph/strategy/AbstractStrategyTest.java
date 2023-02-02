@@ -1,6 +1,6 @@
 package mikhailmineev.graph.strategy;
 
-import mikhailmineev.graph.core.Route;
+import mikhailmineev.graph.solution.Route;
 import mikhailmineev.graph.stats.DefaultStatistics;
 
 import mikhailmineev.graph.stats.Statistics;
