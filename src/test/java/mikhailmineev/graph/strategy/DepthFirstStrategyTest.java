@@ -7,10 +7,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BruteForceStrategyTest extends AbstractStrategyTest {
+public class DepthFirstStrategyTest extends AbstractStrategyTest {
 
-    public BruteForceStrategyTest() {
-        super(BruteforceStrategy::new);
+    public DepthFirstStrategyTest() {
+        super(DepthFirstStrategy::new);
     }
 
     @Override

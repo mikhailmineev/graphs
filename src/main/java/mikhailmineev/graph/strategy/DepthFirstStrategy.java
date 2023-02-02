@@ -8,7 +8,7 @@ import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.*;
 
-public class BruteforceStrategy implements Strategy {
+public class DepthFirstStrategy implements Strategy {
 
     public Route findRoute(String from, String to, Map<String, Node> graph) {
         return findRoute(from, to, graph, new NoStatistics());
