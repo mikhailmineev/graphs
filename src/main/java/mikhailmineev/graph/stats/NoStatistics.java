@@ -8,7 +8,7 @@ import java.util.Collections;
 public class NoStatistics implements Statistics {
 
     @Override
-    public void setNodesVisited(Collection<Node> nodesVisited) {
+    public void visited(Node node) {
         // do nothing
     }
 

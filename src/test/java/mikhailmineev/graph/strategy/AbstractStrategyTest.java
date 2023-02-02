@@ -4,6 +4,7 @@ import mikhailmineev.graph.core.Route;
 import mikhailmineev.graph.stats.DefaultStatistics;
 
 import mikhailmineev.graph.stats.Statistics;
+import mikhailmineev.graph.stats.StatisticsReader;
 import mikhailmineev.graph.store.FiveNodeTree;
 import mikhailmineev.graph.store.FourNodeDiamondGraph;
 import mikhailmineev.graph.store.ThreeNodeGraph;
@@ -40,7 +41,7 @@ public abstract class AbstractStrategyTest {
         verifyTest2NodePath(route, statistics);
     }
 
-    protected abstract void verifyTest2NodePath(Route route, Statistics statistics);
+    protected abstract void verifyTest2NodePath(Route route, StatisticsReader statistics);
 
     @Test
     public void test4NodePath() {
@@ -52,7 +53,7 @@ public abstract class AbstractStrategyTest {
         verifyTest4NodePath(route, statistics);
     }
 
-    protected abstract void verifyTest4NodePath(Route route, Statistics statistics);
+    protected abstract void verifyTest4NodePath(Route route, StatisticsReader statistics);
 
     @Test
     public void test3NodeTree() {
@@ -64,7 +65,7 @@ public abstract class AbstractStrategyTest {
         verifyTest3NodeTree(route, statistics);
     }
 
-    protected abstract void verifyTest3NodeTree(Route route, Statistics statistics);
+    protected abstract void verifyTest3NodeTree(Route route, StatisticsReader statistics);
 
     @Test
     public void test5NodeTree() {
@@ -76,6 +77,6 @@ public abstract class AbstractStrategyTest {
         verifyTest5NodeTree(route, statistics);
     }
 
-    protected abstract void verifyTest5NodeTree(Route route, Statistics statistics);
+    protected abstract void verifyTest5NodeTree(Route route, StatisticsReader statistics);
 
 }

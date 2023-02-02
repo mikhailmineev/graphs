@@ -4,15 +4,17 @@ import mikhailmineev.graph.core.Node;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class DefaultStatistics implements Statistics {
 
-    private Collection<Node> nodesVisited;
+    private final Collection<Node> nodesVisited = new LinkedList<>();
 
     @Override
-    public void setNodesVisited(Collection<Node> nodesVisited) {
-        this.nodesVisited = nodesVisited;
+    public void visited(Node node) {
+        System.out.println("Visited " + node);
+        nodesVisited.add(node);
     }
 
     @Override

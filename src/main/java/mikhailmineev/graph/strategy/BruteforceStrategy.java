@@ -4,7 +4,7 @@ import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 import mikhailmineev.graph.core.Route;
 import mikhailmineev.graph.stats.NoStatistics;
-import mikhailmineev.graph.stats.Statistics;
+import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.*;
 
@@ -15,12 +15,11 @@ public class BruteforceStrategy implements Strategy {
     }
 
     @Override
-    public Route findRoute(String from, String to, Map<String, Node> graph, Statistics statistics) {
+    public Route findRoute(String from, String to, Map<String, Node> graph, StatisticsWriter statistics) {
         Node start = Validations.getNode(from, graph);
         Node end = Validations.getNode(to, graph);
 
         Set<Node> visited = new HashSet<>();
-        statistics.setNodesVisited(visited);
 
         LinkedList<Pair<Node, Route>> toVisit = new LinkedList<>();
         Route route = new Route(start);
@@ -39,6 +38,7 @@ public class BruteforceStrategy implements Strategy {
                 continue;
             }
             visited.add(node);
+            statistics.visited(node);
 
             NodeScanner.scanNode(current, toVisit::push, visited);
         }
