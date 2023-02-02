@@ -5,7 +5,6 @@ import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class NodeBasedRoute implements Route {
 
@@ -47,9 +46,8 @@ public class NodeBasedRoute implements Route {
 
     @Override
     public String toString() {
-        return "Path" + path.stream()
-                .map(e -> " node " + e.left().getName() + " with branch to it " + e.right())
-                .collect(Collectors.joining());
+        return String.join(" -> ", path.stream().map(Pair::left).map(Node::getName)
+                .map(e -> "Node " + e).toList());
     }
 
     @Override
