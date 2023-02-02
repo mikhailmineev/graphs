@@ -18,6 +18,10 @@ public class Route {
         return path.stream().map(Node::getName).toList();
     }
 
+    public int depth() {
+        return path.size();
+    }
+
     public Route addNode(Node node) {
         List<Node> copy = new ArrayList<>(path);
         copy.add(node);
