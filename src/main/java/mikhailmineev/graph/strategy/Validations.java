@@ -13,7 +13,7 @@ public final class Validations {
     public static Node getNode(String nodeName, Map<String, Node> graph) {
         Node node = graph.get(nodeName);
         if (node == null) {
-            throw new IllegalArgumentException("No node " + nodeName + "in graph " + graph);
+            throw new IllegalArgumentException("No node " + nodeName + " in graph " + graph);
         }
         return node;
     }

@@ -47,4 +47,11 @@ public class DepthFirstStrategyTest extends AbstractStrategyTest {
         assertEquals(4, route.length());
         assertEquals(List.of("a", "d"), statistics.getNodesNamesVisited());
     }
+
+    @Override
+    protected void verifyGermanCitiesGraph(Route route, StatisticsReader statistics) {
+        assertEquals(List.of("Frankfurt", "Kassel", "Munchen"), route.getNodeNames());
+        assertEquals(675, route.length());
+        assertEquals(List.of("Frankfurt", "Kassel"), statistics.getNodesNamesVisited());
+    }
 }

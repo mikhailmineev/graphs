@@ -83,4 +83,16 @@ public abstract class AbstractStrategyTest {
 
     protected abstract void verify5NodeWeightedGraph(Route route, StatisticsReader statistics);
 
+
+    @Test
+    public void testGermanCitiesGraph() {
+        var graph = new RelationalGraph(SampleGraphs.germanCitiesGraph()).buildGraph();
+
+        var route = strategy.findRoute("Frankfurt", "Munchen", graph, statistics);
+
+        verifyGermanCitiesGraph(route, statistics);
+    }
+
+    protected abstract void verifyGermanCitiesGraph(Route route, StatisticsReader statistics);
+
 }

@@ -63,4 +63,23 @@ public final class SampleGraphs {
         };
     }
 
+    /**
+     * German cities graph.
+     */
+    public static Row[] germanCitiesGraph() {
+        return new Row[]{
+                new Row("Frankfurt", "Mannheim", 85),
+                new Row("Frankfurt", "Wurzburg", 217),
+                new Row("Frankfurt", "Kassel", 173),
+                new Row("Mannheim", "Karlsruhe", 80),
+                new Row("Wurzburg", "Erfurt", 186),
+                new Row("Wurzburg", "Numberg", 103),
+                new Row("Numberg", "Stuttgart", 183),
+                new Row("Kassel", "Munchen", 502),
+                new Row("Karlsruhe", "Augsburg", 250),
+                new Row("Numberg", "Munchen", 167),
+                new Row("Augsburg", "Munchen", 84)
+        };
+    }
+
 }

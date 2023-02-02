@@ -46,6 +46,23 @@ public class StoreTest {
     }
 
     @Test
+    public void testGermanCitiesGraph() {
+        var graph = new RelationalGraph(SampleGraphs.germanCitiesGraph()).buildGraph();
+
+        assertEquals(10, graph.size());
+        assertBranch("Frankfurt", List.of("Mannheim", "Wurzburg", "Kassel"), List.of(85, 217, 173), graph);
+        assertBranch("Mannheim", List.of("Frankfurt", "Karlsruhe"), List.of(85, 80), graph);
+        assertBranch("Wurzburg", List.of("Frankfurt", "Erfurt", "Numberg"), List.of(217, 186, 103), graph);
+        assertBranch("Kassel", List.of("Frankfurt", "Munchen"), List.of(173, 502), graph);
+        assertBranch("Karlsruhe", List.of("Mannheim", "Augsburg"), List.of(80, 250), graph);
+        assertBranch("Erfurt", List.of("Wurzburg"), List.of(186), graph);
+        assertBranch("Numberg", List.of("Wurzburg", "Stuttgart", "Munchen"), List.of(103, 183, 167), graph);
+        assertBranch("Stuttgart", List.of("Numberg"), List.of(183), graph);
+        assertBranch("Munchen", List.of("Kassel", "Numberg", "Augsburg"), List.of(502, 167, 84), graph);
+        assertBranch("Augsburg", List.of("Karlsruhe", "Munchen"), List.of(250, 84), graph);
+    }
+
+    @Test
     public void testTwoNodeTree() {
         var graph = new RelationalGraph(SampleTrees.twoNodeTree()).buildGraph();
 

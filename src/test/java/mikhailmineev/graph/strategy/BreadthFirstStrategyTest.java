@@ -47,4 +47,11 @@ public class BreadthFirstStrategyTest extends AbstractStrategyTest {
         assertEquals(4, route.length());
         assertEquals(List.of("a", "b", "c", "d"), statistics.getNodesNamesVisited());
     }
+
+    @Override
+    protected void verifyGermanCitiesGraph(Route route, StatisticsReader statistics) {
+        assertEquals(List.of("Frankfurt", "Kassel", "Munchen"), route.getNodeNames());
+        assertEquals(675, route.length());
+        assertEquals(List.of("Frankfurt", "Kassel", "Mannheim", "Wurzburg", "Erfurt", "Karlsruhe"), statistics.getNodesNamesVisited());
+    }
 }
