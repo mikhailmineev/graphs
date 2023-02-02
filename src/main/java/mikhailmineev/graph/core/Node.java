@@ -23,4 +23,9 @@ public class Node {
     public List<Branch> getBranches() {
         return branches.getDelegate();
     }
+
+    @Override
+    public String toString() {
+        return "Node " + name + ", branches " + branches;
+    }
 }

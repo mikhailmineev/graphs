@@ -43,4 +43,9 @@ public class LazyImmutable<T> {
         }
     }
 
+    @Override
+    public String toString() {
+        return delegate == null ? "Not yet instantiated" : delegate.toString();
+    }
+
 }

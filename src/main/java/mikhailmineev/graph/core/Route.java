@@ -1,6 +1,7 @@
 package mikhailmineev.graph.core;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Route {
 
@@ -26,6 +27,11 @@ public class Route {
         List<Node> copy = new ArrayList<>(path);
         copy.add(node);
         return new Route(copy);
+    }
+
+    @Override
+    public String toString() {
+        return "Path" + path.stream().map(e -> " " + e.getName()).collect(Collectors.joining());
     }
 
     @Override
