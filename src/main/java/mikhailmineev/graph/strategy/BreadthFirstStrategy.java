@@ -37,6 +37,7 @@ public class BreadthFirstStrategy implements Strategy {
             Node node = current.left();
 
             if (Objects.equals(node, end)) {
+                statistics.found(current.right());
                 return current.right();
             }
 
