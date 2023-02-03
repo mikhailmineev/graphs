@@ -44,10 +44,11 @@ public class BreadthFirstStrategy implements Strategy {
             if (visited.contains(node)) {
                 continue;
             }
-            visited.add(node);
-            statistics.visited(node);
 
             NodeScanner.scanNode(current, toVisit::add, visited);
+
+            visited.add(node);
+            statistics.visited(node);
         }
 
         throw new RuntimeException("Failed to find route");
