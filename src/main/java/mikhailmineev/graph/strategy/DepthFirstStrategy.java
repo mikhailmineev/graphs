@@ -18,15 +18,13 @@ public class DepthFirstStrategy implements Strategy {
     }
 
     @Override
-    public Route findRoute(String from, Predicate<Node> found, Map<String, Node> graph, StatisticsWriter statistics) {
-        Node start = Validations.getNode(from, graph);
-
+    public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
         Set<Node> visited = new HashSet<>();
 
         LinkedList<Pair<Node, Route>> toVisit = new LinkedList<>();
-        Route route = newRouteSupplier.apply(start);
+        Route route = newRouteSupplier.apply(from);
 
-        toVisit.add(new Pair<>(start, route));
+        toVisit.add(new Pair<>(from, route));
 
         Pair<Node, Route> current;
         while ((current = toVisit.pop()) != null) {

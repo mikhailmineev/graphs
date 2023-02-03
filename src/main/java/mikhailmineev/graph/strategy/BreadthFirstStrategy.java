@@ -18,18 +18,16 @@ public class BreadthFirstStrategy implements Strategy {
     }
 
     @Override
-    public Route findRoute(String from, Predicate<Node> found, Map<String, Node> graph, StatisticsWriter statistics) {
-        Node start = Validations.getNode(from, graph);
-
+    public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
         Set<Node> visited = new HashSet<>();
 
         Comparator<Pair<Node, Route>> depthFirst = Comparator
                 .comparingInt((Pair<Node, Route> e) -> e.right().depth())
                 .thenComparing((Pair<Node, Route> e) -> e.left().getName());
         TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(depthFirst);
-        Route route = newRouteSupplier.apply(start);
+        Route route = newRouteSupplier.apply(from);
 
-        toVisit.add(new Pair<>(start, route));
+        toVisit.add(new Pair<>(from, route));
 
 
         Pair<Node, Route> current;

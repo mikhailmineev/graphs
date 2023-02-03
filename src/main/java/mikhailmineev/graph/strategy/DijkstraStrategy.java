@@ -19,19 +19,17 @@ public class DijkstraStrategy implements Strategy {
     }
 
     @Override
-    public Route findRoute(String from, Predicate<Node> found, Map<String, Node> graph, StatisticsWriter statistics) {
-        Node start = Validations.getNode(from, graph);
-
+    public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
         Comparator<Pair<Node, Integer>> lowestScore = Comparator
                 .comparingInt((Pair<Node, Integer> e) -> e.right())
                 .thenComparing((Pair<Node, Integer> e) -> e.left().getName());
         TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(lowestScore);
-        toVisit.add(new Pair<>(start, 0));
+        toVisit.add(new Pair<>(from, 0));
 
         List<Node> visited = new LinkedList<>();
 
         Map<Node, Branch> routes = new HashMap<>();
-        routes.put(start,null);
+        routes.put(from, null);
 
         Pair<Node, Integer> current;
         while ((current = toVisit.pollFirst()) != null) {
@@ -39,7 +37,7 @@ public class DijkstraStrategy implements Strategy {
             int score = current.right();
 
             if (found.test(node)) {
-                Route route = buildRoute(start, node, routes);
+                Route route = buildRoute(from, node, routes);
                 statistics.found(route);
                 return route;
             }

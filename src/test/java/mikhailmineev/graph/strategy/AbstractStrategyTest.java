@@ -32,7 +32,7 @@ public abstract class AbstractStrategyTest {
     public void test3NodeGraph() {
         var graph = new RelationalGraph(SampleGraphs.threeNodeGraph()).buildGraph();
 
-        var route = strategy.findRoute("a", n -> n.getName().equals("c"), graph, statistics);
+        var route = strategy.findRoute(graph.get("a"), n -> n.getName().equals("c"), statistics);
 
         verify3NodeGraph(route, statistics);
     }
@@ -43,7 +43,7 @@ public abstract class AbstractStrategyTest {
     public void test4NodeDiamondGraph() {
         var graph = new RelationalGraph(SampleGraphs.fourNodeDiamondGraph()).buildGraph();
 
-        var route = strategy.findRoute("a", n -> n.getName().equals("d"), graph, statistics);
+        var route = strategy.findRoute(graph.get("a"), n -> n.getName().equals("d"), statistics);
 
         verify4NodeDiamondGraph(route, statistics);
     }
@@ -54,7 +54,7 @@ public abstract class AbstractStrategyTest {
     public void test3NodeTree() {
         var graph = new RelationalGraph(SampleTrees.threeNodeTree()).buildGraph();
 
-        var route = strategy.findRoute("a", n -> n.getName().equals("c"), graph, statistics);
+        var route = strategy.findRoute(graph.get("a"), n -> n.getName().equals("c"), statistics);
 
         verify3NodeTree(route, statistics);
     }
@@ -65,7 +65,7 @@ public abstract class AbstractStrategyTest {
     public void test5NodeTree() {
         var graph = new RelationalGraph(SampleTrees.fiveNodeTree()).buildGraph();
 
-        var route = strategy.findRoute("a", n -> n.getName().equals("e"), graph, statistics);
+        var route = strategy.findRoute(graph.get("a"), n -> n.getName().equals("e"), statistics);
 
         verify5NodeTree(route, statistics);
     }
@@ -76,7 +76,7 @@ public abstract class AbstractStrategyTest {
     public void test5NodeWeightedGraph() {
         var graph = new RelationalGraph(SampleGraphs.fiveNodeWeightedGraph()).buildGraph();
 
-        var route = strategy.findRoute("a", n -> n.getName().equals("e"), graph, statistics);
+        var route = strategy.findRoute(graph.get("a"), n -> n.getName().equals("e"), statistics);
 
         verify5NodeWeightedGraph(route, statistics);
     }
@@ -88,7 +88,7 @@ public abstract class AbstractStrategyTest {
     public void testGermanCitiesGraph() {
         var graph = new RelationalGraph(SampleGraphs.germanCitiesGraph()).buildGraph();
 
-        var route = strategy.findRoute("Frankfurt", n -> n.getName().equals("Munchen"), graph, statistics);
+        var route = strategy.findRoute(graph.get("Frankfurt"), n -> n.getName().equals("Munchen"), statistics);
 
         verifyGermanCitiesGraph(route, statistics);
     }
