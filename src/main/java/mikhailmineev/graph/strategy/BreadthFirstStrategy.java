@@ -45,7 +45,7 @@ public class BreadthFirstStrategy implements Strategy {
                 continue;
             }
 
-            NodeScanner.scanNode(current, toVisit::add, visited);
+            NodeScanner.scanNode(current, (b, r) -> toVisit.add(new Pair<>(b, r)), visited);
 
             visited.add(node);
             statistics.visited(node);

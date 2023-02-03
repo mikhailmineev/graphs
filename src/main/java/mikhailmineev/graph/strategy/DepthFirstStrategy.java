@@ -41,7 +41,7 @@ public class DepthFirstStrategy implements Strategy {
                 continue;
             }
 
-            NodeScanner.scanNode(current, toVisit::push, visited);
+            NodeScanner.scanNode(current, (b, r) -> toVisit.push(new Pair<>(b, r)), visited);
 
             visited.add(node);
             statistics.visited(node);

@@ -22,21 +22,21 @@ public class DijkstraStrategy implements Strategy {
     public Route findRoute(String from, Predicate<Node> found, Map<String, Node> graph, StatisticsWriter statistics) {
         Node start = Validations.getNode(from, graph);
 
-        Comparator<Pair<Integer, Node>> lowestScore = Comparator
-                .comparingInt((Pair<Integer, Node> e) -> e.left())
-                .thenComparing((Pair<Integer, Node> e) -> e.right().getName());
-        TreeSet<Pair<Integer, Node>> toVisit = new TreeSet<>(lowestScore);
-        toVisit.add(new Pair<>(0, start));
+        Comparator<Pair<Node, Integer>> lowestScore = Comparator
+                .comparingInt((Pair<Node, Integer> e) -> e.right())
+                .thenComparing((Pair<Node, Integer> e) -> e.left().getName());
+        TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(lowestScore);
+        toVisit.add(new Pair<>(start, 0));
 
         List<Node> visited = new LinkedList<>();
 
         Map<Node, Branch> routes = new HashMap<>();
         routes.put(start,null);
 
-        Pair<Integer, Node> current;
+        Pair<Node, Integer> current;
         while ((current = toVisit.pollFirst()) != null) {
-            int score = current.left();
-            Node node = current.right();
+            Node node = current.left();
+            int score = current.right();
 
             if (found.test(node)) {
                 Route route = buildRoute(start, node, routes);
@@ -52,8 +52,8 @@ public class DijkstraStrategy implements Strategy {
                     continue;
                 }
 
-                Pair<Integer, Node> entry = toVisit.stream().filter(e -> e.right().equals(nextNode)).findFirst()
-                        .orElseGet(() -> new Pair<>(Integer.MAX_VALUE, nextNode));
+                Pair<Node, Integer> entry = toVisit.stream().filter(e -> e.left().equals(nextNode)).findFirst()
+                        .orElseGet(() -> new Pair<>(nextNode, Integer.MAX_VALUE));
                 assignNewScore(score, statistics, toVisit, routes, branch, entry);
             }
 
@@ -65,16 +65,16 @@ public class DijkstraStrategy implements Strategy {
     }
 
     private static void assignNewScore(int parentScore, StatisticsWriter statistics,
-                                       Set<Pair<Integer, Node>> toVisit, Map<Node, Branch> routes,
-                                       Branch branch, Pair<Integer, Node> entry) {
+                                       Set<Pair<Node, Integer>> toVisit, Map<Node, Branch> routes,
+                                       Branch branch, Pair<Node, Integer> entry) {
         int newScore = parentScore + branch.length();
-        if (entry.left() <= newScore) {
+        if (entry.right() <= newScore) {
             return;
         }
         toVisit.remove(entry);
-        toVisit.add(new Pair<>(newScore, entry.right()));
-        statistics.score(entry.right(), newScore);
-        routes.put(entry.right(), branch);
+        toVisit.add(new Pair<>(entry.left(), newScore));
+        statistics.score(entry.left(), newScore);
+        routes.put(entry.left(), branch);
     }
 
     private Route buildRoute(Node start, Node end, Map<Node, Branch> waypoints) {

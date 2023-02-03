@@ -6,7 +6,7 @@ import mikhailmineev.graph.core.Pair;
 import mikhailmineev.graph.solution.Route;
 
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public final class NodeScanner {
 
@@ -14,16 +14,16 @@ public final class NodeScanner {
         // utility class
     }
 
-    public static void scanNode(Pair<Node, Route> current, Consumer<Pair<Node, Route>> newNodeRegisterer,
+    public static void scanNode(Pair<Node, Route> current, BiConsumer<Node, Route> nonVisitedNodeConsumer,
                                        Set<Node> visited) {
         Node node = current.left();
         Route routeToCurrent = current.right();
 
         for (Branch branch : node.getBranches()) {
-            var newRoute = routeToCurrent.addBranch(branch);
             var nextNode = branch.to();
             if (!visited.contains(nextNode)) {
-                newNodeRegisterer.accept(new Pair<>(nextNode, newRoute));
+                var newRoute = routeToCurrent.addBranch(branch);
+                nonVisitedNodeConsumer.accept(nextNode, newRoute);
             }
         }
     }
