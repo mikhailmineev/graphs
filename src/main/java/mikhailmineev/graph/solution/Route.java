@@ -30,6 +30,16 @@ public interface Route {
     int length();
 
     /**
+     * Adds branch to the tail of the solution and returns same or new tail.
+     *
+     * @param branchToNode branch that should lead to new end of route
+     * @return route with added tail
+     */
+    default Route addBranch(Branch branchToNode) {
+        return addNode(branchToNode.to(), branchToNode);
+    }
+
+    /**
      * Adds node to the tail of the solution and returns same or new tail.
      *
      * @param node visited node

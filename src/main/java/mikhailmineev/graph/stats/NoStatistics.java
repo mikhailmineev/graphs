@@ -9,6 +9,11 @@ import java.util.Collections;
 public class NoStatistics implements Statistics {
 
     @Override
+    public void score(Node node, int score) {
+        // do nothing
+    }
+
+    @Override
     public void visited(Node node) {
         // do nothing
     }

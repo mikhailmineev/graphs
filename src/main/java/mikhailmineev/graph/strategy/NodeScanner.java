@@ -20,9 +20,8 @@ public final class NodeScanner {
         Route routeToCurrent = current.right();
 
         for (Branch branch : node.getBranches()) {
+            var newRoute = routeToCurrent.addBranch(branch);
             var nextNode = branch.to();
-            var newRoute = routeToCurrent.addNode(nextNode, branch);
-
             if (!visited.contains(nextNode)) {
                 newNodeRegisterer.accept(new Pair<>(nextNode, newRoute));
             }
