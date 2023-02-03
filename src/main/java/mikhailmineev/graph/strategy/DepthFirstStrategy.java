@@ -7,6 +7,7 @@ import mikhailmineev.graph.stats.StatisticsWriter;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class DepthFirstStrategy implements Strategy {
 
@@ -17,9 +18,8 @@ public class DepthFirstStrategy implements Strategy {
     }
 
     @Override
-    public Route findRoute(String from, String to, Map<String, Node> graph, StatisticsWriter statistics) {
+    public Route findRoute(String from, Predicate<Node> found, Map<String, Node> graph, StatisticsWriter statistics) {
         Node start = Validations.getNode(from, graph);
-        Node end = Validations.getNode(to, graph);
 
         Set<Node> visited = new HashSet<>();
 
@@ -32,7 +32,7 @@ public class DepthFirstStrategy implements Strategy {
         while ((current = toVisit.pop()) != null) {
             Node node = current.left();
 
-            if (Objects.equals(node, end)) {
+            if (found.test(node)) {
                 statistics.found(current.right());
                 return current.right();
             }
