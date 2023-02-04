@@ -1,5 +1,6 @@
 package mikhailmineev.graph.strategy;
 
+import mikhailmineev.graph.core.Branch;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 import mikhailmineev.graph.solution.Route;
@@ -11,9 +12,9 @@ import java.util.function.Predicate;
 
 public class BreadthFirstStrategy implements Strategy {
 
-    private static final Comparator<Pair<Node, Route>> DEPTH_FIRST = Comparator
-            .comparingInt((Pair<Node, Route> e) -> e.right().depth())
-            .thenComparing((Pair<Node, Route> e) -> e.left().getName());
+    private static final Comparator<Pair<Node, Integer>> DEPTH_FIRST = Comparator
+            .comparingInt((Pair<Node, Integer> e) -> e.right())
+            .thenComparing((Pair<Node, Integer> e) -> e.left().getName());
 
     private final Function<Node, Route> newRouteSupplier;
 
@@ -23,26 +24,25 @@ public class BreadthFirstStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(DEPTH_FIRST);
-        Route route = newRouteSupplier.apply(from);
-        toVisit.add(new Pair<>(from, route));
+        TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(DEPTH_FIRST);
+        toVisit.add(new Pair<>(from, 0));
 
         Set<Node> visited = new HashSet<>();
 
-        Pair<Node, Route> current;
+        Map<Node, Branch> routes = new HashMap<>();
+        routes.put(from, null);
+
+        Pair<Node, Integer> current;
         while ((current = toVisit.pollFirst()) != null) {
             Node node = current.left();
 
             if (found.test(node)) {
-                statistics.found(current.right());
-                return current.right();
+                Route route = NodeScanner.buildRoute(from, node, routes, newRouteSupplier);
+                statistics.found(route);
+                return route;
             }
 
-            if (visited.contains(node)) {
-                continue;
-            }
-
-            NodeScanner.scanNode(current, (b, r) -> toVisit.add(new Pair<>(b, r)), visited);
+            NodeScanner.scanNode(routes, current, (n, d) -> toVisit.add(new Pair<>(n, d + 1)), visited);
 
             visited.add(node);
             statistics.visited(node);

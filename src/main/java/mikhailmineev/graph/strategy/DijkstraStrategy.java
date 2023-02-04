@@ -27,7 +27,7 @@ public class DijkstraStrategy implements Strategy {
         TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(LOWEST_SCORE);
         toVisit.add(new Pair<>(from, 0));
 
-        List<Node> visited = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
 
         Map<Node, Branch> routes = new HashMap<>();
         routes.put(from, null);
@@ -35,14 +35,12 @@ public class DijkstraStrategy implements Strategy {
         Pair<Node, Integer> current;
         while ((current = toVisit.pollFirst()) != null) {
             Node node = current.left();
-            int score = current.right();
 
             if (found.test(node)) {
-                Route route = buildRoute(from, node, routes);
+                Route route = NodeScanner.buildRoute(from, node, routes, newRouteSupplier);
                 statistics.found(route);
                 return route;
             }
-
 
             for (Branch branch : node.getBranches()) {
                 var nextNode = branch.to();
@@ -53,7 +51,7 @@ public class DijkstraStrategy implements Strategy {
 
                 Pair<Node, Integer> entry = toVisit.stream().filter(e -> e.left().equals(nextNode)).findFirst()
                         .orElseGet(() -> new Pair<>(nextNode, Integer.MAX_VALUE));
-                assignNewScore(score, statistics, toVisit, routes, branch, entry);
+                assignNewScore(current.right(), statistics, toVisit, routes, branch, entry);
             }
 
             visited.add(node);
@@ -74,22 +72,6 @@ public class DijkstraStrategy implements Strategy {
         toVisit.add(new Pair<>(entry.left(), newScore));
         statistics.score(entry.left(), newScore);
         routes.put(entry.left(), branch);
-    }
-
-    private Route buildRoute(Node start, Node end, Map<Node, Branch> waypoints) {
-        LinkedList<Branch> fromBeginning = new LinkedList<>();
-
-        Branch branch;
-        while ((branch = waypoints.get(end)) != null) {
-            fromBeginning.push(branch);
-            end = branch.from();
-        }
-
-        Route route = newRouteSupplier.apply(start);
-        for (Branch step : fromBeginning) {
-            route = route.addBranch(step);
-        }
-        return route;
     }
 
 }

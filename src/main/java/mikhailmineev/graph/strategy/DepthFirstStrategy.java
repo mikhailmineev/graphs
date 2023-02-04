@@ -1,5 +1,6 @@
 package mikhailmineev.graph.strategy;
 
+import mikhailmineev.graph.core.Branch;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 import mikhailmineev.graph.solution.Route;
@@ -19,26 +20,25 @@ public class DepthFirstStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        LinkedList<Pair<Node, Route>> toVisit = new LinkedList<>();
-        Route route = newRouteSupplier.apply(from);
-        toVisit.add(new Pair<>(from, route));
+        LinkedList<Pair<Node, Integer>> toVisit = new LinkedList<>();
+        toVisit.add(new Pair<>(from, 0));
 
         Set<Node> visited = new HashSet<>();
 
-        Pair<Node, Route> current;
+        Map<Node, Branch> routes = new HashMap<>();
+        routes.put(from, null);
+
+        Pair<Node, Integer> current;
         while ((current = toVisit.pop()) != null) {
             Node node = current.left();
 
             if (found.test(node)) {
-                statistics.found(current.right());
-                return current.right();
+                Route route = NodeScanner.buildRoute(from, node, routes, newRouteSupplier);
+                statistics.found(route);
+                return route;
             }
 
-            if (visited.contains(node)) {
-                continue;
-            }
-
-            NodeScanner.scanNode(current, (b, r) -> toVisit.push(new Pair<>(b, r)), visited);
+            NodeScanner.scanNode(routes, current, (n, d) -> toVisit.push(new Pair<>(n, d)), visited);
 
             visited.add(node);
             statistics.visited(node);
