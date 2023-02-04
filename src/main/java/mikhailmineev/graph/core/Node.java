@@ -1,31 +1,33 @@
 package mikhailmineev.graph.core;
 
-import lombok.Getter;
-
-import java.util.Collections;
 import java.util.List;
 
-@Getter
-public class Node {
+/**
+ * Basic interface for Nodes.
+ * Implementations may be immutable or lazy.
+ * <p>
+ * Node implementations must follow the contract:
+ * <ul>
+ *     <li>Nodes representing the same thing must refer the same object ({@code a == b} has value {@code true})</li>
+ *     <li>Nodes representing different things must have different names ({@code a.getName().equals(b.getName())}
+ *     has value {@code false})</li>
+ *     <li>Repetitive calls of {@code Node.getBranches()} must return the same result</li>
+ * </ul>
+ */
+public interface Node {
 
-    private final String name;
+    /**
+     * Get branch list.
+     * Implementations may have lazy branch list.
+     *
+     * @return branches with child nodes inside
+     */
+    List<Branch> getBranches();
 
-    private final LazyImmutable<List<Branch>> branches = new LazyImmutable<>(Collections::unmodifiableList);
-
-    public Node(String name) {
-        this.name = name;
-    }
-
-    public void setBranches(List<Branch> branches) {
-        this.branches.setDelegate(branches);
-    }
-
-    public List<Branch> getBranches() {
-        return branches.getDelegate();
-    }
-
-    @Override
-    public String toString() {
-        return "Node " + name + ", branches " + branches;
-    }
+    /**
+     * Get node name.
+     *
+     * @return node name
+     */
+    String getName();
 }

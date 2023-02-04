@@ -1,6 +1,7 @@
 package mikhailmineev.graph.store;
 
 import mikhailmineev.graph.core.Branch;
+import mikhailmineev.graph.core.LazyImmutableNode;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 
@@ -21,7 +22,7 @@ public class RelationalGraph implements GraphStore {
 
     @Override
     public Map<String, Node> buildGraph() {
-        Map<String, Pair<Node, List<Branch>>> graph = new HashMap<>();
+        Map<String, Pair<LazyImmutableNode, List<Branch>>> graph = new HashMap<>();
         for (Row row : data) {
             createBidirectionalLink(graph, row);
         }
@@ -32,7 +33,7 @@ public class RelationalGraph implements GraphStore {
                 .collect(Collectors.toMap(Map.Entry::getKey, RelationalGraph::setupNode));
     }
 
-    private static void createBidirectionalLink(Map<String, Pair<Node, List<Branch>>> graph, Row row) {
+    private static void createBidirectionalLink(Map<String, Pair<LazyImmutableNode, List<Branch>>> graph, Row row) {
         int length = row.length();
         var from = getNodeListPair(graph, row.from());
         var to = getNodeListPair(graph, row.to());
@@ -44,11 +45,11 @@ public class RelationalGraph implements GraphStore {
         toList.add(new Branch(toNode, fromNode, length));
     }
 
-    private static Pair<Node, List<Branch>> getNodeListPair(Map<String, Pair<Node, List<Branch>>> graph, String row) {
-        return graph.computeIfAbsent(row, e -> new Pair<>(new Node(e), new ArrayList<>()));
+    private static Pair<LazyImmutableNode, List<Branch>> getNodeListPair(Map<String, Pair<LazyImmutableNode, List<Branch>>> graph, String row) {
+        return graph.computeIfAbsent(row, e -> new Pair<>(new LazyImmutableNode(e), new ArrayList<>()));
     }
 
-    private static Node setupNode(Map.Entry<String, Pair<Node, List<Branch>>> e) {
+    private static Node setupNode(Map.Entry<String, Pair<LazyImmutableNode, List<Branch>>> e) {
         var node = e.getValue().left();
         var branches = e.getValue().right();
         node.setBranches(branches);
