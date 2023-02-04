@@ -18,7 +18,7 @@ public final class NodeScanner {
     }
 
     public static void scanNode(Map<Node, Branch> routes, Pair<Node, Integer> current,
-                                BiConsumer<Node, Integer> nonVisitedNodeConsumer, Set<Node> visited) {
+                                BiConsumer<Branch, Integer> nonVisitedNodeConsumer, Set<Node> visited) {
         Node node = current.left();
         Integer score = current.right();
 
@@ -26,7 +26,7 @@ public final class NodeScanner {
             var nextNode = branch.to();
             if (!visited.contains(nextNode)) {
                 routes.putIfAbsent(nextNode, branch);
-                nonVisitedNodeConsumer.accept(nextNode, score);
+                nonVisitedNodeConsumer.accept(branch, score);
             }
         }
     }

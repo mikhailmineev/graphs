@@ -42,17 +42,7 @@ public class DijkstraStrategy implements Strategy {
                 return route;
             }
 
-            for (Branch branch : node.getBranches()) {
-                var nextNode = branch.to();
-
-                if (visited.contains(nextNode)) {
-                    continue;
-                }
-
-                Pair<Node, Integer> entry = toVisit.stream().filter(e -> e.left().equals(nextNode)).findFirst()
-                        .orElseGet(() -> new Pair<>(nextNode, Integer.MAX_VALUE));
-                assignNewScore(current.right(), statistics, toVisit, routes, branch, entry);
-            }
+            NodeScanner.scanNode(routes, current, (b, s) -> assignNewScore(s, statistics, toVisit, routes, b), visited);
 
             visited.add(node);
             statistics.visited(node);
@@ -61,9 +51,14 @@ public class DijkstraStrategy implements Strategy {
         throw new RuntimeException("Failed to find route");
     }
 
-    private void assignNewScore(int parentScore, StatisticsWriter statistics,
-                                       Set<Pair<Node, Integer>> toVisit, Map<Node, Branch> routes,
-                                       Branch branch, Pair<Node, Integer> entry) {
+    private void assignNewScore(int parentScore, StatisticsWriter statistics, Set<Pair<Node, Integer>> toVisit,
+                                Map<Node, Branch> routes, Branch branch) {
+        Pair<Node, Integer> entry = toVisit
+                .stream()
+                .filter(e -> e.left().equals(branch.to()))
+                .findFirst()
+                .orElseGet(() -> new Pair<>(branch.to(), Integer.MAX_VALUE));
+
         int newScore = parentScore + branch.length();
         if (entry.right() <= newScore) {
             return;
