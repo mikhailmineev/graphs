@@ -23,28 +23,12 @@ public class DepthFirstStrategy implements Strategy {
         Pollable<Pair<Node, Integer>> toVisit = Pollable.of(new LinkedList<>());
         toVisit.add(new Pair<>(from, 0));
 
-        Set<Node> visited = new HashSet<>();
-
         Map<Node, Branch> routes = new HashMap<>();
         routes.put(from, null);
 
-        Pair<Node, Integer> current;
-        while ((current = toVisit.first()) != null) {
-            Node node = current.left();
-
-            if (found.test(node)) {
-                Route route = NodeScanner.buildRoute(from, node, routes, newRouteSupplier);
-                statistics.found(route);
-                return route;
-            }
-
-            NodeScanner.scanNode(routes, current, (b, s) -> toVisit.push(new Pair<>(b.to(), s)), visited);
-
-            visited.add(node);
-            statistics.visited(node);
-        }
-
-        throw new RuntimeException("Failed to find route");
+        return NodeScanner.scanAllNodes(from, toVisit, found, routes, newRouteSupplier, statistics,
+                        (b, s) -> toVisit.push(new Pair<>(b.to(), s)))
+                .orElseThrow(() -> new RuntimeException("Failed to find route"));
     }
 
 }

@@ -4,17 +4,41 @@ import mikhailmineev.graph.core.Branch;
 import mikhailmineev.graph.core.Node;
 import mikhailmineev.graph.core.Pair;
 import mikhailmineev.graph.solution.Route;
+import mikhailmineev.graph.stats.StatisticsWriter;
 
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public final class NodeScanner {
 
     private NodeScanner() {
         // utility class
+    }
+
+    public static Optional<Route> scanAllNodes(Node from, Pollable<Pair<Node, Integer>> toVisit, Predicate<Node> found,
+                                               Map<Node, Branch> routes, Function<Node, Route> newRouteSupplier,
+                                               StatisticsWriter statistics,
+                                               BiConsumer<Branch, Integer> nonVisitedNodeConsumer) {
+        Set<Node> visited = new HashSet<>();
+
+        Pair<Node, Integer> current;
+        while ((current = toVisit.first()) != null) {
+            Node node = current.left();
+
+            if (found.test(node)) {
+                Route route = NodeScanner.buildRoute(from, node, routes, newRouteSupplier);
+                statistics.found(route);
+                return Optional.of(route);
+            }
+
+            NodeScanner.scanNode(routes, current, nonVisitedNodeConsumer, visited);
+
+            visited.add(node);
+            statistics.visited(node);
+        }
+        return Optional.empty();
     }
 
     public static void scanNode(Map<Node, Branch> routes, Pair<Node, Integer> current,

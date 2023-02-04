@@ -27,28 +27,12 @@ public class DijkstraStrategy implements Strategy {
         Pollable<Pair<Node, Integer>> toVisit = Pollable.of(new TreeSet<>(LOWEST_SCORE));
         toVisit.add(new Pair<>(from, 0));
 
-        Set<Node> visited = new HashSet<>();
-
         Map<Node, Branch> routes = new HashMap<>();
         routes.put(from, null);
 
-        Pair<Node, Integer> current;
-        while ((current = toVisit.first()) != null) {
-            Node node = current.left();
-
-            if (found.test(node)) {
-                Route route = NodeScanner.buildRoute(from, node, routes, newRouteSupplier);
-                statistics.found(route);
-                return route;
-            }
-
-            NodeScanner.scanNode(routes, current, (b, s) -> assignNewScore(s, statistics, toVisit, routes, b), visited);
-
-            visited.add(node);
-            statistics.visited(node);
-        }
-
-        throw new RuntimeException("Failed to find route");
+        return NodeScanner.scanAllNodes(from, toVisit, found, routes, newRouteSupplier, statistics,
+                        (b, s) -> assignNewScore(s, statistics, toVisit, routes, b))
+                .orElseThrow(() -> new RuntimeException("Failed to find route"));
     }
 
     private void assignNewScore(int parentScore, StatisticsWriter statistics, Pollable<Pair<Node, Integer>> toVisit,
