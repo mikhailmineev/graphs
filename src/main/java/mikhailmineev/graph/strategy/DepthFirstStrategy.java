@@ -19,12 +19,11 @@ public class DepthFirstStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        Set<Node> visited = new HashSet<>();
-
         LinkedList<Pair<Node, Route>> toVisit = new LinkedList<>();
         Route route = newRouteSupplier.apply(from);
-
         toVisit.add(new Pair<>(from, route));
+
+        Set<Node> visited = new HashSet<>();
 
         Pair<Node, Route> current;
         while ((current = toVisit.pop()) != null) {

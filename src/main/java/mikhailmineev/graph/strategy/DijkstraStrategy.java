@@ -12,6 +12,10 @@ import java.util.function.Predicate;
 
 public class DijkstraStrategy implements Strategy {
 
+    private static final Comparator<Pair<Node, Integer>> LOWEST_SCORE = Comparator
+            .comparingInt((Pair<Node, Integer> e) -> e.right())
+            .thenComparing((Pair<Node, Integer> e) -> e.left().getName());
+
     private final Function<Node, Route> newRouteSupplier;
 
     public DijkstraStrategy(Function<Node, Route> newRouteSupplier) {
@@ -20,10 +24,7 @@ public class DijkstraStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        Comparator<Pair<Node, Integer>> lowestScore = Comparator
-                .comparingInt((Pair<Node, Integer> e) -> e.right())
-                .thenComparing((Pair<Node, Integer> e) -> e.left().getName());
-        TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(lowestScore);
+        TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(LOWEST_SCORE);
         toVisit.add(new Pair<>(from, 0));
 
         List<Node> visited = new LinkedList<>();
@@ -62,7 +63,7 @@ public class DijkstraStrategy implements Strategy {
         throw new RuntimeException("Failed to find route");
     }
 
-    private static void assignNewScore(int parentScore, StatisticsWriter statistics,
+    private void assignNewScore(int parentScore, StatisticsWriter statistics,
                                        Set<Pair<Node, Integer>> toVisit, Map<Node, Branch> routes,
                                        Branch branch, Pair<Node, Integer> entry) {
         int newScore = parentScore + branch.length();

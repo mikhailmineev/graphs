@@ -11,6 +11,10 @@ import java.util.function.Predicate;
 
 public class BreadthFirstStrategy implements Strategy {
 
+    private static final Comparator<Pair<Node, Route>> DEPTH_FIRST = Comparator
+            .comparingInt((Pair<Node, Route> e) -> e.right().depth())
+            .thenComparing((Pair<Node, Route> e) -> e.left().getName());
+
     private final Function<Node, Route> newRouteSupplier;
 
     public BreadthFirstStrategy(Function<Node, Route> newRouteSupplier) {
@@ -19,16 +23,11 @@ public class BreadthFirstStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        Set<Node> visited = new HashSet<>();
-
-        Comparator<Pair<Node, Route>> depthFirst = Comparator
-                .comparingInt((Pair<Node, Route> e) -> e.right().depth())
-                .thenComparing((Pair<Node, Route> e) -> e.left().getName());
-        TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(depthFirst);
+        TreeSet<Pair<Node, Route>> toVisit = new TreeSet<>(DEPTH_FIRST);
         Route route = newRouteSupplier.apply(from);
-
         toVisit.add(new Pair<>(from, route));
 
+        Set<Node> visited = new HashSet<>();
 
         Pair<Node, Route> current;
         while ((current = toVisit.pollFirst()) != null) {
