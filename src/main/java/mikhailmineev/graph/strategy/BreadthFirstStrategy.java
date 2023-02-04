@@ -24,7 +24,7 @@ public class BreadthFirstStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(DEPTH_FIRST);
+        Pollable<Pair<Node, Integer>> toVisit = Pollable.of(new TreeSet<>(DEPTH_FIRST));
         toVisit.add(new Pair<>(from, 0));
 
         Set<Node> visited = new HashSet<>();
@@ -33,7 +33,7 @@ public class BreadthFirstStrategy implements Strategy {
         routes.put(from, null);
 
         Pair<Node, Integer> current;
-        while ((current = toVisit.pollFirst()) != null) {
+        while ((current = toVisit.first()) != null) {
             Node node = current.left();
 
             if (found.test(node)) {

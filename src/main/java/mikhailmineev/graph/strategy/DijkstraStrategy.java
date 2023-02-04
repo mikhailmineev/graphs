@@ -24,7 +24,7 @@ public class DijkstraStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        TreeSet<Pair<Node, Integer>> toVisit = new TreeSet<>(LOWEST_SCORE);
+        Pollable<Pair<Node, Integer>> toVisit = Pollable.of(new TreeSet<>(LOWEST_SCORE));
         toVisit.add(new Pair<>(from, 0));
 
         Set<Node> visited = new HashSet<>();
@@ -33,7 +33,7 @@ public class DijkstraStrategy implements Strategy {
         routes.put(from, null);
 
         Pair<Node, Integer> current;
-        while ((current = toVisit.pollFirst()) != null) {
+        while ((current = toVisit.first()) != null) {
             Node node = current.left();
 
             if (found.test(node)) {
@@ -51,7 +51,7 @@ public class DijkstraStrategy implements Strategy {
         throw new RuntimeException("Failed to find route");
     }
 
-    private void assignNewScore(int parentScore, StatisticsWriter statistics, Set<Pair<Node, Integer>> toVisit,
+    private void assignNewScore(int parentScore, StatisticsWriter statistics, Pollable<Pair<Node, Integer>> toVisit,
                                 Map<Node, Branch> routes, Branch branch) {
         Pair<Node, Integer> entry = toVisit
                 .stream()

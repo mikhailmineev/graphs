@@ -20,7 +20,7 @@ public class DepthFirstStrategy implements Strategy {
 
     @Override
     public Route findRoute(Node from, Predicate<Node> found, StatisticsWriter statistics) {
-        LinkedList<Pair<Node, Integer>> toVisit = new LinkedList<>();
+        Pollable<Pair<Node, Integer>> toVisit = Pollable.of(new LinkedList<>());
         toVisit.add(new Pair<>(from, 0));
 
         Set<Node> visited = new HashSet<>();
@@ -29,7 +29,7 @@ public class DepthFirstStrategy implements Strategy {
         routes.put(from, null);
 
         Pair<Node, Integer> current;
-        while ((current = toVisit.pop()) != null) {
+        while ((current = toVisit.first()) != null) {
             Node node = current.left();
 
             if (found.test(node)) {
